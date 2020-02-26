@@ -176,6 +176,7 @@
             this.pictureBox.Size = new System.Drawing.Size(148, 149);
             this.pictureBox.TabIndex = 17;
             this.pictureBox.TabStop = false;
+            this.pictureBox.Click += new System.EventHandler(this.pictureBox_Click);
             // 
             // FrmManagePerson
             // 

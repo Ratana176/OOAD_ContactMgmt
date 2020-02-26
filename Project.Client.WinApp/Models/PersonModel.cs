@@ -16,7 +16,7 @@ namespace Project.Client.WinApp.Models
 
         public List<Person> All()
         {
-            List<Person> people = new List<Person>();
+            var people = new List<Person>();
             var persons = this.GetValue(commandText: "SELECT * From person");
             while(persons.Read())
             {
@@ -65,7 +65,7 @@ namespace Project.Client.WinApp.Models
                 );
         }
 
-        private SqlParameter[] Parameters(Person person)
+        private static SqlParameter[] Parameters(Person person)
         {
             var Id = new SqlParameter("@Id", SqlDbType.Int) { Value = person.Id };
             var Name = new SqlParameter("@Name", SqlDbType.NVarChar, 100) { Value = person.Name };
@@ -79,7 +79,7 @@ namespace Project.Client.WinApp.Models
             return new SqlParameter[] { Id, Name, Email, Position, CompanyName, StreetAddress, City, Phone, ImageUrl};
         }
 
-        private Person PersonFromResult(SqlDataReader reader)
+        private static Person PersonFromResult(SqlDataReader reader)
         {
             return new Person
             {

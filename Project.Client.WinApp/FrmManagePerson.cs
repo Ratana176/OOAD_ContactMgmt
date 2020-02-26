@@ -44,11 +44,14 @@ namespace Project.Client.WinApp
 
         private Person Assign()
         {
+            var path = pictureBox.ImageLocation;
+            path = path.Substring(path.LastIndexOf("\\", StringComparison.Ordinal)).Remove(0, 1);
+            
             var person = PersonBuilderDirector.Create()
                 .HasName(txtName.Text)
                 .HasEmail(txtEmail.Text)
                 .HasPhone(txtPhone.Text)
-                .HasImage(pictureBox.ImageLocation)
+                .HasImage(path)
                 .At(txtStreetAddress.Text)
                 .AsA(txtPosition.Text)
                 .WorkedWith(txtCompany.Text)
@@ -66,6 +69,16 @@ namespace Project.Client.WinApp
             else
             {
                 _personModel.Save(Assign());
+            }
+        }
+
+        private void pictureBox_Click(object sender, EventArgs e)
+        {
+            using (var openFileDialog = new OpenFileDialog(){ Title = @"Open Image", Filter = @"Image Files (*.bmp;*.jpg;*.jpeg,*.png)|*.BMP;*.JPG;*.JPEG;*.PNG"})
+            {
+                if (openFileDialog.ShowDialog() != DialogResult.OK) return;
+                pictureBox.ImageLocation = openFileDialog.FileName;
+                pictureBox.Image.Save((@"Upload\" + openFileDialog.SafeFileName));
             }
         }
     }

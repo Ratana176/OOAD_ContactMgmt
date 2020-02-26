@@ -10,7 +10,7 @@ namespace Project.Client.WinApp.Domain.Entities
     {
         protected Person person;
 
-        public PersonBuilder()
+        protected PersonBuilder()
         {
             person = new Person();
         }

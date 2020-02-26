@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Project.Client.WinApp
 {
-    public class Helper
+    public static class Helper
     {
         public static string UploadedUrl(string ImageName)
         {
