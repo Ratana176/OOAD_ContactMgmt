@@ -26,20 +26,20 @@ namespace Project.Client.WinApp
             }
         }
 
+        //private static readonly Lazy<DatabaseConnection> lazy = new Lazy<DatabaseConnection>(() => new DatabaseConnection());
+        //public static DatabaseConnection Instance => lazy.Value;
+
         public SqlConnection Connection => SqlConnection;
 
         public static DatabaseConnection Instance
         {
             get
             {
-                lock (instance)
+                if(instance == null)
                 {
-                    if(instance == null)
-                    {
-                        instance = new DatabaseConnection();
-                    }
-                    return instance;
+                    instance = new DatabaseConnection();
                 }
+                return instance;
             }
         }
 

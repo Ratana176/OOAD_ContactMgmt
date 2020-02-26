@@ -1,10 +1,12 @@
 ﻿using System.Data;
 using System.Data.SqlClient;
+using System.Threading.Tasks;
+
 namespace Project.Client.WinApp.Models
 {
     public class Model
     {
-        private DatabaseConnection DatabaseConnection;
+        protected DatabaseConnection DatabaseConnection;
         public Model()
         {
             DatabaseConnection = DatabaseConnection.Instance;
@@ -33,7 +35,7 @@ namespace Project.Client.WinApp.Models
                 return command.ExecuteNonQuery();
             }
         }
-        protected object GetValue(string commandText, CommandType commandType = CommandType.Text, int commandTimeout = 60, params SqlParameter[] parameters)
+        protected SqlDataReader GetValue(string commandText, CommandType commandType = CommandType.Text, int commandTimeout = 60, params SqlParameter[] parameters)
         {
             using (var command = CreateCommand(DatabaseConnection.Connection, commandText, commandType, commandTimeout))
             {
@@ -43,16 +45,23 @@ namespace Project.Client.WinApp.Models
                 }
 
                 Open(DatabaseConnection.Connection);
-
-                return command.ExecuteScalar();
+                return command.ExecuteReader();
             }
         }
 
-        private void Open(SqlConnection connection)
+        protected void Open(SqlConnection connection)
         {
             if (connection.State != ConnectionState.Open)
             {
                 connection.Open();
+            }
+        }
+
+        protected void Close(SqlConnection connection)
+        {
+            if (connection.State != ConnectionState.Closed)
+            {
+                connection.Close();
             }
         }
 

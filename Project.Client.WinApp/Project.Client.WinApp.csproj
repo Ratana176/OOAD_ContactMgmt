@@ -49,11 +49,15 @@
   <ItemGroup>
     <Compile Include="DatabaseConnection.cs" />
     <Compile Include="Domain\Entities\Person.cs" />
-    <Compile Include="FrmAddPerson.cs">
+    <Compile Include="Domain\Entities\PersonAddressBuilder.cs" />
+    <Compile Include="Domain\Entities\PersonBuilder.cs" />
+    <Compile Include="Domain\Entities\PersonInfoBuilder.cs" />
+    <Compile Include="Domain\Entities\PersonJobBuilder.cs" />
+    <Compile Include="FrmManagePerson.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmAddPerson.Designer.cs">
-      <DependentUpon>FrmAddPerson.cs</DependentUpon>
+    <Compile Include="FrmManagePerson.Designer.cs">
+      <DependentUpon>FrmManagePerson.cs</DependentUpon>
     </Compile>
     <Compile Include="FrmAllPeople.cs">
       <SubType>Form</SubType>
@@ -67,6 +71,7 @@
     <Compile Include="FrmMain.Designer.cs">
       <DependentUpon>FrmMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helper.cs" />
     <Compile Include="Infrastructure\Files\ExcelBuilder.cs" />
     <Compile Include="Models\Model.cs" />
     <Compile Include="Models\PersonModel.cs" />
@@ -78,8 +83,8 @@
     <Compile Include="ViewProfile.Designer.cs">
       <DependentUpon>ViewProfile.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="FrmAddPerson.resx">
-      <DependentUpon>FrmAddPerson.cs</DependentUpon>
+    <EmbeddedResource Include="FrmManagePerson.resx">
+      <DependentUpon>FrmManagePerson.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmAllPeople.resx">
       <DependentUpon>FrmAllPeople.cs</DependentUpon>
@@ -112,6 +117,8 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Upload\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

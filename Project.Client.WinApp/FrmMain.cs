@@ -16,5 +16,17 @@ namespace Project.Client.WinApp
         {
             InitializeComponent();
         }
+
+        private void btnViewAll_Click(object sender, EventArgs e)
+        {
+            var form = new FrmAllPeople();
+            form.ShowDialog();
+        }
+
+        private void btnAddNew_Click(object sender, EventArgs e)
+        {
+            var form = new FrmManagePerson();
+            form.ShowDialog();
+        }
     }
 }
