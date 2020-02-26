@@ -8,13 +8,13 @@ namespace Project.Client.WinApp.Domain.Entities
 {
     public abstract class PersonBuilder
     {
-        protected Person person = new Person();
-        public class Builder: PersonBuilder { }
+        protected Person person;
 
-        public static readonly Builder New = new Builder();
-        public Person Info => person;
-        public PersonJobBuilder Works => new PersonJobBuilder(person);
-        public PersonAddressBuilder Lives => new PersonAddressBuilder(person);
+        public PersonBuilder()
+        {
+            person = new Person();
+        }
+        public Person Builder() => person;
         public static implicit operator Person(PersonBuilder personBuilder) => personBuilder.person;
 
     }

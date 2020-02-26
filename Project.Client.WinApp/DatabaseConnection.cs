@@ -10,14 +10,14 @@ namespace Project.Client.WinApp
 {
     public class DatabaseConnection
     {
-        private SqlConnection SqlConnection;
-        private static DatabaseConnection instance;
+        private readonly SqlConnection _sqlConnection;
+        private static DatabaseConnection _instance;
         private DatabaseConnection()
         {
             try
             {
-                string connection = ConfigurationManager.ConnectionStrings["default"].ConnectionString;
-                this.SqlConnection = new SqlConnection(connection);
+                var connection = ConfigurationManager.ConnectionStrings["default"].ConnectionString;
+                this._sqlConnection = new SqlConnection(connection);
             }
             catch (Exception e)
             {
@@ -29,25 +29,18 @@ namespace Project.Client.WinApp
         //private static readonly Lazy<DatabaseConnection> lazy = new Lazy<DatabaseConnection>(() => new DatabaseConnection());
         //public static DatabaseConnection Instance => lazy.Value;
 
-        public SqlConnection Connection => SqlConnection;
+        public SqlConnection Connection => _sqlConnection;
 
         public static DatabaseConnection Instance
         {
-            get
-            {
-                if(instance == null)
-                {
-                    instance = new DatabaseConnection();
-                }
-                return instance;
-            }
+            get { return _instance ?? (_instance = new DatabaseConnection()); }
         }
 
-        public Boolean Open()
+        public bool Open()
         {
             try
             {
-                SqlConnection.Open();
+                _sqlConnection.Open();
                 return true;
             }
             catch (Exception e)
@@ -58,14 +51,11 @@ namespace Project.Client.WinApp
         }
 
 
-        public Boolean Close()
+        public bool Close()
         {
-            if (SqlConnection.State == System.Data.ConnectionState.Open)
-            {
-                SqlConnection.Close();
-                return true;
-            }
-            return false;
+            if (_sqlConnection.State != System.Data.ConnectionState.Open) return false;
+            _sqlConnection.Close();
+            return true;
         }
 
     }

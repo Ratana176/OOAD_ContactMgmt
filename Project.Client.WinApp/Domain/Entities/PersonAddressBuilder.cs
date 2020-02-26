@@ -6,21 +6,17 @@ using System.Threading.Tasks;
 
 namespace Project.Client.WinApp.Domain.Entities
 {
-    public class PersonAddressBuilder : PersonBuilder
+    public class PersonAddressBuilder<T> : PersonInfoBuilder<PersonAddressBuilder<T>> where T : PersonAddressBuilder<T>
     {
-        public PersonAddressBuilder(Person person)
-        {
-            this.person = person;
-        }
-        public PersonAddressBuilder At(string streetAddress)
+        public T At(string streetAddress)
         {
             person.StreetAddress = streetAddress;
-            return this;
+            return (T)this;
         }
-        public PersonAddressBuilder In(string city)
+        public T In(string city)
         {
             person.City = city;
-            return this;
+            return (T)this;
         }
     }
 

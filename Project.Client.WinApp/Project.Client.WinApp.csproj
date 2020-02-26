@@ -51,6 +51,7 @@
     <Compile Include="Domain\Entities\Person.cs" />
     <Compile Include="Domain\Entities\PersonAddressBuilder.cs" />
     <Compile Include="Domain\Entities\PersonBuilder.cs" />
+    <Compile Include="Domain\Entities\PersonBuilderDirector.cs" />
     <Compile Include="Domain\Entities\PersonInfoBuilder.cs" />
     <Compile Include="Domain\Entities\PersonJobBuilder.cs" />
     <Compile Include="FrmManagePerson.cs">

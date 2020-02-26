@@ -20,7 +20,7 @@ namespace Project.Client.WinApp
 
         }
 
-        public void InitData()
+        private void InitData()
         {
             var people = new PersonModel().All();
             dgvPeople.DataSource = people;
@@ -46,22 +46,20 @@ namespace Project.Client.WinApp
         {
             var senderGrid = (DataGridView)sender;
             var button = senderGrid.Columns[e.ColumnIndex];
-            if (button is DataGridViewButtonColumn && e.RowIndex >= 0)
-            {
-                var id = (int)senderGrid["Id", e.RowIndex].Value;
-                var title = ((DataGridViewButtonColumn)button).Text;
+            if (!(button is DataGridViewButtonColumn) || e.RowIndex < 0) return;
+            var id = (int)senderGrid["Id", e.RowIndex].Value;
+            var title = ((DataGridViewButtonColumn)button).Text;
 
-                if (title.Equals("edit")) Edit(id);
-                else Display(id);
-            }
+            if (title.Equals("edit")) Edit(id);
+            else Display(id);
         }
 
-        private void Edit(int id)
+        private static void Edit(int id)
         {
             new FrmManagePerson(id).ShowDialog();
         }
 
-        private void Display(int id)
+        private static void Display(int id)
         {
 
         }

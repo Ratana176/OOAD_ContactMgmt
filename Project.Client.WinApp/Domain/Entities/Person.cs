@@ -12,7 +12,6 @@ namespace Project.Client.WinApp.Domain.Entities
         public string Name { get; set; }
         public string Email { get; set; }
         public string Position { get; set; }
-        //addresss
         public string CompanyName { get; set; }
         public string StreetAddress { get; set; }
         public string City { get; set; }

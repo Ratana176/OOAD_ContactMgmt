@@ -6,27 +6,17 @@ using System.Threading.Tasks;
 
 namespace Project.Client.WinApp.Domain.Entities
 {
-    public class PersonJobBuilder : PersonBuilder
+    public class PersonJobBuilder<T> : PersonAddressBuilder<PersonJobBuilder<T>> where T : PersonJobBuilder<T>
     {
-        public PersonJobBuilder(Person person)
-        {
-            this.person = person;
-        }
-
-        public PersonJobBuilder At(string companyName)
+        public T WorkedWith(string companyName)
         {
             person.CompanyName = companyName;
-            return this;
+            return (T)this;
         }
-        public PersonJobBuilder AsA(string position)
+        public T AsA(string position)
         {
             person.Position = position;
-            return this;
-        }
-        public PersonJobBuilder Earning(string Phone)
-        {
-            person.Phone = Phone;
-            return this;
+            return (T)this;
         }
     }
 }
