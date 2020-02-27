@@ -51,7 +51,7 @@ namespace Project.Client.WinApp.Models
         public int Save(Person person)
         {
             return this.Execute(
-                commandText: "INSERT INTO person (id, name, phone, email, position, company_name, street_address, city, image_url) VALUES(null,@Name,@Phone,@Email,@Position, @CompanyName,@StreetAddress,@City, @ImageUrl);",
+                commandText: "INSERT INTO person (name, phone, email, position, company_name, street_address, city, image_url) VALUES(@Name,@Phone,@Email,@Position, @CompanyName,@StreetAddress,@City, @ImageUrl);",
                 parameters: Parameters(person)
                 );
         }
@@ -68,31 +68,30 @@ namespace Project.Client.WinApp.Models
         private static SqlParameter[] Parameters(Person person)
         {
             var Id = new SqlParameter("@Id", SqlDbType.Int) { Value = person.Id };
-            var Name = new SqlParameter("@Name", SqlDbType.NVarChar, 100) { Value = person.Name };
-            var Email = new SqlParameter("@Email", SqlDbType.NVarChar, 50) { Value = person.Email };
-            var Position = new SqlParameter("@Position", SqlDbType.NVarChar, 100) { Value = person.Position };
-            var CompanyName = new SqlParameter("@CompanyName", SqlDbType.NVarChar, 100) { Value = person.CompanyName };
-            var StreetAddress = new SqlParameter("@StreetAddress", SqlDbType.NVarChar, 200) { Value = person.StreetAddress };
-            var City = new SqlParameter("@City", SqlDbType.NVarChar, 50) { Value = person.City };
-            var Phone = new SqlParameter("@Phone", SqlDbType.NVarChar, 20) { Value = person.Phone };
-            var ImageUrl = new SqlParameter("@ImageUrl", SqlDbType.NVarChar, 100) { Value = person.ImageUrl };
+            var Name = new SqlParameter("@Name", SqlDbType.NVarChar) { Value = person.Name };
+            var Email = new SqlParameter("@Email", SqlDbType.NVarChar) { Value = person.Email };
+            var Position = new SqlParameter("@Position", SqlDbType.NVarChar) { Value = person.Position };
+            var CompanyName = new SqlParameter("@CompanyName", SqlDbType.NVarChar) { Value = person.CompanyName };
+            var StreetAddress = new SqlParameter("@StreetAddress", SqlDbType.NVarChar) { Value = person.StreetAddress };
+            var City = new SqlParameter("@City", SqlDbType.NVarChar) { Value = person.City };
+            var Phone = new SqlParameter("@Phone", SqlDbType.NVarChar) { Value = person.Phone };
+            var ImageUrl = new SqlParameter("@ImageUrl", SqlDbType.NVarChar) { Value = Helper.GetDataValue(person.ImageUrl) };
             return new SqlParameter[] { Id, Name, Email, Position, CompanyName, StreetAddress, City, Phone, ImageUrl};
         }
 
         private static Person PersonFromResult(SqlDataReader reader)
         {
-            return new Person
-            {
-                Id = Int32.Parse(reader["id"].ToString()),
-                Name = reader["name"].ToString(),
-                Email = reader["email"].ToString(),
-                Position = reader["position"].ToString(),
-                Phone = reader["phone"].ToString(),
-                CompanyName = reader["company_name"].ToString(),
-                StreetAddress = reader["street_address"].ToString(),
-                City = reader["city"].ToString(),
-                ImageUrl = reader["image_url"].ToString(),
-            };
+            return PersonBuilderDirector.Create()
+                .HasId(Int32.Parse(reader["id"].ToString()))
+                .HasName(reader["name"].ToString())
+                .HasEmail(reader["email"].ToString())
+                .HasPhone(reader["phone"].ToString())
+                .HasImage(reader["image_url"].ToString())
+                .At(reader["street_address"].ToString())
+                .AsA(reader["position"].ToString())
+                .WorkedWith(reader["company_name"].ToString())
+                .In(reader["city"].ToString())
+                .Builder();
         }
     }
 }

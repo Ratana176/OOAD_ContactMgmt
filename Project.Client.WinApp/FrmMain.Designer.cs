@@ -34,9 +34,9 @@
             // 
             // btnAddNew
             // 
-            this.btnAddNew.Location = new System.Drawing.Point(106, 119);
+            this.btnAddNew.Location = new System.Drawing.Point(134, 134);
             this.btnAddNew.Name = "btnAddNew";
-            this.btnAddNew.Size = new System.Drawing.Size(201, 142);
+            this.btnAddNew.Size = new System.Drawing.Size(172, 123);
             this.btnAddNew.TabIndex = 0;
             this.btnAddNew.Text = "Add New Person";
             this.btnAddNew.UseVisualStyleBackColor = true;
@@ -44,9 +44,9 @@
             // 
             // btnViewAll
             // 
-            this.btnViewAll.Location = new System.Drawing.Point(407, 119);
+            this.btnViewAll.Location = new System.Drawing.Point(392, 134);
             this.btnViewAll.Name = "btnViewAll";
-            this.btnViewAll.Size = new System.Drawing.Size(201, 142);
+            this.btnViewAll.Size = new System.Drawing.Size(172, 123);
             this.btnViewAll.TabIndex = 1;
             this.btnViewAll.Text = "View All People";
             this.btnViewAll.UseVisualStyleBackColor = true;
@@ -54,15 +54,17 @@
             // 
             // FrmMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(749, 418);
+            this.ClientSize = new System.Drawing.Size(749, 432);
             this.Controls.Add(this.btnViewAll);
             this.Controls.Add(this.btnAddNew);
+            this.MaximizeBox = false;
             this.Name = "FrmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FrmMain";
             this.ResumeLayout(false);
+
         }
 
         #endregion

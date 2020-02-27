@@ -48,9 +48,11 @@
             // 
             // pictureBox
             // 
-            this.pictureBox.Location = new System.Drawing.Point(96, 35);
+            this.pictureBox.Image = global::Project.Client.WinApp.Properties.Resources.user_100;
+            this.pictureBox.Location = new System.Drawing.Point(85, 32);
             this.pictureBox.Name = "pictureBox";
             this.pictureBox.Size = new System.Drawing.Size(127, 129);
+            this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox.TabIndex = 33;
             this.pictureBox.TabStop = false;
             // 
@@ -184,7 +186,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(319, 378);
+            this.ClientSize = new System.Drawing.Size(292, 378);
             this.Controls.Add(this.lblCity);
             this.Controls.Add(this.lblStreet);
             this.Controls.Add(this.lblCompany);
@@ -201,6 +203,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Name = "ViewProfile";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "ViewProfile";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
             this.ResumeLayout(false);

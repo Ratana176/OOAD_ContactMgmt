@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,18 +16,27 @@ namespace Project.Client.WinApp
     public partial class FrmManagePerson : Form
     {
         private readonly PersonModel _personModel;
+        private readonly int _id;
+        private string _imagePath;
         public FrmManagePerson(int id = -1)
         {
             InitializeComponent();
             _personModel = new PersonModel();
-            ManageField(id);
+            this._id = id;
+            ManageField();
         }
 
-        private void ManageField(int id)
+        private void ManageField()
         {
-            if (id == -1) return;
-            var person = _personModel.FindById(id);
+            if (this._id == -1) return;
+            var person = _personModel.FindById(this._id);
             SetUp(person);
+        }
+
+        public int ShowForm()
+        {
+            this.ShowDialog();
+            return this._id;
         }
 
         private void SetUp(Person person)
@@ -44,14 +54,12 @@ namespace Project.Client.WinApp
 
         private Person Assign()
         {
-            var path = pictureBox.ImageLocation;
-            path = path.Substring(path.LastIndexOf("\\", StringComparison.Ordinal)).Remove(0, 1);
-            
             var person = PersonBuilderDirector.Create()
+                .HasId(this._id)
                 .HasName(txtName.Text)
                 .HasEmail(txtEmail.Text)
                 .HasPhone(txtPhone.Text)
-                .HasImage(path)
+                .HasImage(Path.GetFileName(pictureBox.ImageLocation))
                 .At(txtStreetAddress.Text)
                 .AsA(txtPosition.Text)
                 .WorkedWith(txtCompany.Text)
@@ -62,24 +70,42 @@ namespace Project.Client.WinApp
 
         private void btnManage_Click(object sender, EventArgs e)
         {
+            if( _imagePath != null)
+            {
+                Helper.SaveImage(_imagePath);
+            }
             if (btnManage.Text == "Update")
             {
-                _personModel.Update(Assign());
+                if (_personModel.Update(Assign()) > 0)
+                {
+                    MessageBox.Show("Updated");
+                }
             }
             else
             {
-                _personModel.Save(Assign());
+                if(_personModel.Save(Assign())> 0)
+                {
+                    MessageBox.Show("Insertd");
+                }
             }
+            this.Close();
         }
 
         private void pictureBox_Click(object sender, EventArgs e)
         {
             using (var openFileDialog = new OpenFileDialog(){ Title = @"Open Image", Filter = @"Image Files (*.bmp;*.jpg;*.jpeg,*.png)|*.BMP;*.JPG;*.JPEG;*.PNG"})
             {
-                if (openFileDialog.ShowDialog() != DialogResult.OK) return;
+                if (openFileDialog.ShowDialog() != DialogResult.OK)
+                {
+                    _imagePath = null;
+                    return;
+                }
                 pictureBox.ImageLocation = openFileDialog.FileName;
-                pictureBox.Image.Save((@"Upload\" + openFileDialog.SafeFileName));
+                if (!Directory.Exists(Environment.CurrentDirectory + @"\Upload")) Directory.CreateDirectory(Environment.CurrentDirectory + @"\Upload");
+                _imagePath = openFileDialog.FileName;
             }
         }
+
+
     }
 }

@@ -12,11 +12,12 @@ namespace Project.Client.WinApp
     {
         private readonly SqlConnection _sqlConnection;
         private static DatabaseConnection _instance;
+        private string connection;
         private DatabaseConnection()
         {
             try
             {
-                var connection = ConfigurationManager.ConnectionStrings["default"].ConnectionString;
+                connection = ConfigurationManager.ConnectionStrings["default"].ConnectionString;
                 this._sqlConnection = new SqlConnection(connection);
             }
             catch (Exception e)
@@ -30,6 +31,8 @@ namespace Project.Client.WinApp
         //public static DatabaseConnection Instance => lazy.Value;
 
         public SqlConnection Connection => _sqlConnection;
+
+        public string ConnectionString => connection;
 
         public static DatabaseConnection Instance
         {

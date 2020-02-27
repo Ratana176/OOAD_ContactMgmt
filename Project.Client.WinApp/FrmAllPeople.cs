@@ -23,6 +23,7 @@ namespace Project.Client.WinApp
         private void InitData()
         {
             var people = new PersonModel().All();
+            dgvPeople.Columns.Clear();
             dgvPeople.DataSource = people;
 
             var btnView = new DataGridViewButtonColumn();
@@ -54,15 +55,47 @@ namespace Project.Client.WinApp
             else Display(id);
         }
 
-        private static void Edit(int id)
+        private void Edit(int id)
         {
-            new FrmManagePerson(id).ShowDialog();
+            if(new FrmManagePerson(id).ShowForm() != -1)
+            {
+                InitData();
+            }
         }
 
         private static void Display(int id)
         {
-
+            new ViewProfile(id).ShowDialog();
         }
 
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            string searchValue = txtSearch.Text;
+
+            dgvPeople.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            try
+            {
+                foreach (DataGridViewRow row in dgvPeople.Rows)
+                {
+                    row.Selected = false;
+                    foreach (var item in row.Cells)
+                    {
+                        if (item is DataGridViewTextBoxCell)
+                        {
+                            var column = (DataGridViewTextBoxCell)item;
+                            if (column.Value.ToString().Contains(searchValue))
+                            {
+                                row.Selected = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message);
+            }
+        }
     }
 }
